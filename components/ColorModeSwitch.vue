@@ -2,19 +2,22 @@
   <b-switch size="is-large" v-model="isDarkMode"></b-switch>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 
 export default Vue.extend({
   name: 'color-mode-switch',
   data() {
     return {
-      isDarkMode: false,
+      isDarkMode: this.$colorMode.value === 'dark',
     }
+  },
+  beforeMount() {
+    this.$colorMode.value = 'dark'
   },
   watch: {
     isDarkMode(value) {
-      console.log(value)
+      this.$colorMode.value = this.isDarkMode ? 'dark' : 'light'
     },
   },
 })

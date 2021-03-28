@@ -1,0 +1,7 @@
+.dark-mode body {
+  background-color: black;
+}
+
+.dark-mode .title {
+  color: white;
+}

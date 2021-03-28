@@ -1,0 +1,7 @@
+.light-mode body {
+  background-color: white;
+}
+
+.dark-mode .title {
+  color: #aaa;
+}
