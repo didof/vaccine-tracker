@@ -1,18 +1,25 @@
 <template>
-  <div>
-    <BarChart :labels="labels" :datasets="datasets" />
-    <pre>{{ data }}</pre>
-  </div>
+  <section class="columns">
+    <div class="column is-8">
+      <BarChart :labels="labels" :datasets="datasets" />
+    </div>
+    <div class="column is-4">
+      <ItalyMap />
+    </div>
+    <!-- <pre>{{ data }}</pre> -->
+  </section>
 </template>
 
 <script>
 import Vue from 'vue'
 import BarChart from '~/components/charts/BarChart'
+import ItalyMap from '~/components/charts/ItalyMap'
 
 export default Vue.extend({
   name: 'page-somministrations',
   components: {
     BarChart,
+    ItalyMap,
   },
   computed: {
     data() {
