@@ -2,7 +2,7 @@
   <section class="tile is-ancestor">
     <article class="tile is-child notification">
       <div class="content">
-        <p class="title">Tall tile</p>
+        <p class="title">Consegna e Somministrazione di Vaccini</p>
         <p class="subtitle">With even more content</p>
         <div class="content">
           <BarChart :labels="labels" :datasets="datasets" />
@@ -25,7 +25,7 @@
 <script>
 import Vue from 'vue'
 import BarChart from '~/components/charts/BarChart'
-import ItalyMap from '~/components/charts/ItalyMap'
+import ItalyMap from '~/components/charts/Map'
 
 export default Vue.extend({
   name: 'page-somministrations',
