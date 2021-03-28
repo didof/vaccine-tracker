@@ -20,6 +20,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/css/global.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -41,10 +42,20 @@ export default {
     'nuxt-buefy',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    // https://google-fonts.nuxtjs.org/
+    ['@nuxtjs/google-fonts', {
+      Ubuntu: [400, 700]
+    }]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+
+  googleFonts: {
+    display: 'swap',
+    prefetch: true,
+    preconnect: true
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
