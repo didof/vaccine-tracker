@@ -1,9 +1,9 @@
 import { Store } from 'vuex'
-import urls from './urls'
+import data from './data'
 
 const createStore = () =>
   new Store({
-    modules: { urls },
+    modules: { data },
   })
 
 export default createStore
