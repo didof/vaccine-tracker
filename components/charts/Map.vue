@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="title">{{ selectedRegion }}</h1>
     <svg width="100%" height="100%" viewBox="-200 0 900 800">
       <path
         v-for="path in paths"
@@ -8,7 +9,7 @@
         :title="path.title"
         :fill="fill(path.title)"
         stroke="white"
-        @mouseover="test(path.title)"
+        @mouseover="onRegionHover(path.title)"
       ></path>
     </svg>
   </div>
@@ -20,6 +21,7 @@ import Vue from 'vue'
 import italy from '~/assets/svg/italy'
 
 export default Vue.extend({
+  emits: ['region-hover'],
   data() {
     return {
       hasMounted: false,
@@ -27,6 +29,7 @@ export default Vue.extend({
       data: null,
       min: null,
       denominator: null,
+      selectedRegion: '',
     }
   },
   created() {
@@ -53,8 +56,8 @@ export default Vue.extend({
 
       return `rgba(0, 0, 255, ${normalized})`
     },
-    test(region) {
-      console.log(region)
+    onRegionHover(regionName) {
+      this.$emit('region-hover', regionName)
     },
   },
 })

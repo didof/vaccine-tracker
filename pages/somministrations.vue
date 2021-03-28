@@ -12,10 +12,10 @@
 
     <article class="tile is-child notification">
       <div class="content">
-        <p class="title">Tall tile</p>
-        <p class="subtitle">With even more content</p>
+        <p class="title">{{ selectedRegion }}</p>
+        <p class="subtitle">{{ dosiSomministrate }}</p>
         <div class="content">
-          <ItalyMap />
+          <ItalyMap @region-hover="onRegionHover" />
         </div>
       </div>
     </article>
@@ -32,6 +32,12 @@ export default Vue.extend({
   components: {
     BarChart,
     ItalyMap,
+  },
+  data() {
+    return {
+      selectedRegion: '',
+      dosiSomministrate: null,
+    }
   },
   computed: {
     data() {
@@ -80,6 +86,18 @@ export default Vue.extend({
         backgroundColor,
         orderWidth: 1,
       }
+    },
+    onRegionHover(hoveredRegion) {
+      this.selectedRegion = hoveredRegion
+    },
+  },
+  watch: {
+    selectedRegion(value) {
+      const data = this.$store.getters['data/somministrationsData']
+
+      const regionObject = data.find((region) => region.nome_area === value)
+
+      this.dosiSomministrate = regionObject.dosi_somministrate
     },
   },
 })
