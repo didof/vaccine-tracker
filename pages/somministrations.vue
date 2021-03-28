@@ -1,12 +1,24 @@
 <template>
-  <section class="columns">
-    <div class="column is-8">
-      <BarChart :labels="labels" :datasets="datasets" />
-    </div>
-    <div class="column is-4">
-      <ItalyMap />
-    </div>
-    <!-- <pre>{{ data }}</pre> -->
+  <section class="tile is-ancestor">
+    <article class="tile is-child notification">
+      <div class="content">
+        <p class="title">Tall tile</p>
+        <p class="subtitle">With even more content</p>
+        <div class="content">
+          <BarChart :labels="labels" :datasets="datasets" />
+        </div>
+      </div>
+    </article>
+
+    <article class="tile is-child notification">
+      <div class="content">
+        <p class="title">Tall tile</p>
+        <p class="subtitle">With even more content</p>
+        <div class="content">
+          <ItalyMap />
+        </div>
+      </div>
+    </article>
   </section>
 </template>
 
