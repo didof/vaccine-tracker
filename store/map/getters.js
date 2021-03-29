@@ -8,4 +8,10 @@ export default {
   focusedRegion(state) {
     return state.focusedRegion
   },
+  filterBy(state) {
+    return state.filterBy
+  },
+  elementIdentifier(state) {
+    return state.elementIdentifier
+  },
 }

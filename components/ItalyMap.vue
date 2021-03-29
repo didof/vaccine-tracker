@@ -1,18 +1,16 @@
 <template>
   <div>
     <SvgMap
-      v-if="data"
       :paths="italyPath"
       :data="data"
-      filterBy="dosi_somministrate"
-      elementIdentifier="nome_area"
+      :filterBy="filterBy"
+      :elementIdentifier="elementIdentifier"
       :activeList="selectedRegions"
       :focusedElement="focusedRegion"
       @path-enter="onEnter"
       @path-leave="onLeave"
       @path-click="onClick"
     />
-    <div v-else>Loading</div>
   </div>
 </template>
 
@@ -46,6 +44,12 @@ export default Vue.extend({
     },
     focusedRegion() {
       return this.$store.getters['map/focusedRegion']
+    },
+    filterBy() {
+      return this.$store.getters['map/filterBy']
+    },
+    elementIdentifier() {
+      return this.$store.getters['map/elementIdentifier']
     },
   },
   methods: {
