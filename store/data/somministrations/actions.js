@@ -1,7 +1,5 @@
 export default {
   setData({ commit }, payload) {
-    // TODO: slim data
-
     delete payload.schema
 
     const FIELDS = [

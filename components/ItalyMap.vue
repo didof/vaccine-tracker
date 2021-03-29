@@ -1,0 +1,73 @@
+<template>
+  <div>
+    <SvgMap
+      v-if="data"
+      :paths="italyPath"
+      :data="data"
+      filterBy="dosi_somministrate"
+      elementIdentifier="nome_area"
+      :activeList="selectedRegions"
+      :focusedElement="focusedRegion"
+      @path-enter="onEnter"
+      @path-leave="onLeave"
+      @path-click="onClick"
+    />
+    <div v-else>Loading</div>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue'
+
+import SvgMap from '~/components/charts/SvgMap'
+
+import italyPath from '~/assets/svg/italy'
+
+export default Vue.extend({
+  name: 'italy-map',
+  components: {
+    SvgMap,
+  },
+  data() {
+    return {
+      italyPath,
+      data: [],
+    }
+  },
+  created() {
+    this.data = this.$store.getters['somministrations/data']
+    this.regions = this.data.map((region) => region.nome_area)
+    this.$store.dispatch('map/setRegions', this.regions)
+    this.$store.dispatch('map/setSelectedRegions', this.regions)
+  },
+  computed: {
+    selectedRegions() {
+      return this.$store.getters['map/selectedRegions']
+    },
+    focusedRegion() {
+      return this.$store.getters['map/focusedRegion']
+    },
+  },
+  methods: {
+    onEnter(value) {
+      this.$store.dispatch('map/setFocusedRegion', value)
+    },
+    onLeave() {
+      this.$store.dispatch('map/setFocusedRegion', null)
+    },
+    onClick(value) {
+      if (!value) return
+
+      if (this.selectedRegions.includes(value)) {
+        const filtered = this.selectedRegions.filter(
+          (region) => region != value
+        )
+        this.$store.dispatch('map/setSelectedRegions', filtered)
+      } else {
+        const pushed = [...this.selectedRegions, value]
+        this.$store.dispatch('map/setSelectedRegions', pushed)
+      }
+    },
+  },
+})
+</script>
