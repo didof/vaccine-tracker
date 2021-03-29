@@ -18,13 +18,13 @@
           @tag-leave="onLeave"
         />
 
-        <AutoCompleteInputField
+        <!-- <AutoCompleteInputField
           label="Search Region"
           placeholder="Type Italian region..."
           :allOptions="allRegions"
           :notAvaiableOptions="selectedRegions"
           @selected="onAddRegion"
-        />
+        /> -->
       </div>
     </section>
     <section class="columns">

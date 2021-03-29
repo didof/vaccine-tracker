@@ -74,13 +74,13 @@ export default Vue.extend({
 
       let rgb = '0, 0, 255'
 
-      if (title === this.focusedElement) rgb = '0, 255, 0'
+      if (title === this.focusedElement) rgb = '255, 255, 255'
 
       const a = this.normalize(found[this.filterBy])
       return `rgba(${rgb}, ${a})`
     },
     strokeColor(title) {
-      return title === this.focusedElement ? 'green' : 'white'
+      return title === this.focusedElement ? 'blue' : 'white'
     },
     strokeWidth(title) {
       return title === this.focusedElement ? 3 : 1
