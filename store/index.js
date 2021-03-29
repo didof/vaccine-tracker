@@ -1,9 +1,9 @@
 import { Store } from 'vuex'
-import data from './data'
+import somministrations from './data/somministrations'
 
 const createStore = () =>
   new Store({
-    modules: { data },
+    modules: { somministrations },
   })
 
 export default createStore

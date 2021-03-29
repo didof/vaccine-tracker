@@ -25,7 +25,7 @@
 <script>
 import Vue from 'vue'
 import BarChart from '~/components/charts/BarChart'
-import ItalyMap from '~/components/charts/Map'
+import ItalyMap from '~/components/charts/MapItaly'
 
 export default Vue.extend({
   name: 'page-somministrations',
@@ -41,7 +41,7 @@ export default Vue.extend({
   },
   computed: {
     data() {
-      return this.$store.getters['data/somministrationsData']
+      return this.$store.getters['somministrations/data']
     },
     labels() {
       return this.data.map((el) => el.nome_area)
@@ -61,11 +61,11 @@ export default Vue.extend({
   },
   async fetch({ store, $axios }) {
     const hasAlreadyFetched =
-      store.getters['data/hasAlreadyFetchedSomministrations']
+      store.getters['somministrations/hasAlreadyFetched']
 
-    let data = 'yop'
+    let data
     if (!hasAlreadyFetched) {
-      const url = store.getters['data/somministrationsUrl']
+      const url = store.getters['somministrations/url']
 
       try {
         data = await $axios.$get(url)
@@ -73,9 +73,9 @@ export default Vue.extend({
         console.error(err)
       }
 
-      store.dispatch('data/setSomministrationsData', data)
+      store.dispatch('somministrations/setData', data)
     } else {
-      data = store.getters['data/somministrationsData']
+      data = store.getters['somministrations/data']
     }
   },
   methods: {
@@ -93,7 +93,7 @@ export default Vue.extend({
   },
   watch: {
     selectedRegion(value) {
-      const data = this.$store.getters['data/somministrationsData']
+      const data = this.$store.getters['somministrations/data']
 
       const regionObject = data.find((region) => region.nome_area === value)
 
