@@ -2,14 +2,6 @@
   <div class="section">
     <section class="columns">
       <div class="column is-12">
-        <TagList
-          :items="selectedRegions"
-          :focusedElement="focusedRegion"
-          @tag-click="onTagClick"
-          @tag-enter="onEnter"
-          @tag-leave="onLeave"
-        />
-
         <AutoCompleteInputField
           label="Search Region"
           placeholder="Type Italian region..."
@@ -27,16 +19,12 @@
 import Vue from 'vue'
 import BarChart from '~/components/charts/BarChart'
 
-import TagList from '~/components/ui/TagList'
-import RegionSwitch from '~/components/ui/switches/RegionSwitch'
 import AutoCompleteInputField from '~/components/ui/AutoCompleteInputField'
 
 export default Vue.extend({
   name: 'page-somministrations',
   components: {
     BarChart,
-    TagList,
-    RegionSwitch,
     AutoCompleteInputField,
   },
   data() {
@@ -113,17 +101,6 @@ export default Vue.extend({
       } else {
         this.selectedRegions.push(value)
       }
-    },
-    onEnter(value) {
-      this.focusedRegion = value
-    },
-    onLeave() {
-      this.focusedRegion = null
-    },
-    onTagClick(value) {
-      this.selectedRegions = this.selectedRegions.filter(
-        (region) => region !== value
-      )
     },
   },
 })
