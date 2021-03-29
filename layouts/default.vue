@@ -5,7 +5,7 @@
     <div class="container is-fluid columns">
       <div class="column"><Nuxt /></div>
       <div class="column is-4 section">
-        <RegionsSwitch /><TheItalyMap /><TheRegionsTagList /><TheAutoCompleteRegionsInputField />
+        <TheRegionsSwitch /><TheItalyMap /><TheRegionsTagList /><TheAutoCompleteRegionsInputField />
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
 import Vue from 'vue'
 import TheHeader from '~/components/TheHeader'
 import TheItalyMap from '~/components/TheItalyMap'
-import RegionsSwitch from '~/components/RegionsSwitch'
+import TheRegionsSwitch from '~/components/TheRegionsSwitch'
 import TheRegionsTagList from '~/components/TheRegionsTagList'
 import TheAutoCompleteRegionsInputField from '~/components/TheAutoCompleteRegionsInputField'
 
@@ -24,7 +24,7 @@ export default Vue.extend({
   components: {
     TheHeader,
     TheItalyMap,
-    RegionsSwitch,
+    TheRegionsSwitch,
     TheRegionsTagList,
     TheAutoCompleteRegionsInputField,
   },

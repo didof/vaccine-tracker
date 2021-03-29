@@ -6,7 +6,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'regions-switch',
+  name: 'the-regions-switch',
   emits: ['change'],
   data() {
     return {
