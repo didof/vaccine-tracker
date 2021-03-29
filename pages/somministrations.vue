@@ -2,11 +2,25 @@
   <div class="section">
     <section class="columns">
       <div class="column is-12">
-        <b-field>
-          <b-switch size="is-large" v-model="regionsSwitch"
-            >All regions</b-switch
+        <RegionSwitch
+          :watchItems="selectedRegions"
+          :itemsLength="data.length"
+          @change="onRegionSwitchChange"
+        />
+        <!-- <b-switch size="is-large" v-model="regionsSwitch">All regions</b-switch> -->
+        <!-- <b-field label="Find a name">
+          <b-autocomplete
+            v-model="name"
+            placeholder="e.g. Anne"
+            :keep-first="keepFirst"
+            :open-on-focus="openOnFocus"
+            :data="filteredDataObj"
+            field="user.first_name"
+            @select="(option) => (selected = option)"
+            :clearable="clearable"
           >
-        </b-field>
+          </b-autocomplete>
+        </b-field> -->
         <TagList
           :items="selectedRegions"
           :focusedElement="focusedRegion"
@@ -45,6 +59,7 @@ import italyPaths from '~/assets/svg/italy'
 import SvgMap from '~/components/charts/SvgMap'
 
 import TagList from '~/components/ui/TagList'
+import RegionSwitch from '~/components/ui/switches/RegionSwitch'
 
 export default Vue.extend({
   name: 'page-somministrations',
@@ -52,6 +67,7 @@ export default Vue.extend({
     BarChart,
     SvgMap,
     TagList,
+    RegionSwitch,
   },
   data() {
     return {
@@ -105,36 +121,6 @@ export default Vue.extend({
       data = store.getters['somministrations/data']
     }
   },
-  watch: {
-    selectedRegions(value) {
-      console.log(value.length)
-      if (value.length === this.data.length) {
-        this.regionsSwitch = true
-      }
-    },
-    regionsSwitch(value) {
-      if (value) {
-        this.selectedRegions = this.data.map((region) => region.nome_area)
-      } else {
-        const snapshot = this.selectedRegions
-        this.selectedRegions = []
-        this.$buefy.snackbar.open({
-          message: 'All regions deselected',
-          type: 'is-info',
-          position: 'is-bottom-left',
-          actionText: 'undo',
-          duration: 3000,
-          onAction: () => {
-            this.selectedRegions = snapshot
-            this.$buefy.toast.open({
-              message: 'Regions restored',
-              queue: false,
-            })
-          },
-        })
-      }
-    },
-  },
   methods: {
     generateDataset(label, backgroundColor) {
       const selectedData = this.data.filter((region) =>
@@ -167,6 +153,28 @@ export default Vue.extend({
       this.selectedRegions = this.selectedRegions.filter(
         (region) => region !== value
       )
+    },
+    onRegionSwitchChange(value) {
+      if (value) {
+        this.selectedRegions = this.data.map((region) => region.nome_area)
+      } else {
+        const snapshot = this.selectedRegions
+        this.selectedRegions = []
+        this.$buefy.snackbar.open({
+          message: 'All regions deselected',
+          type: 'is-info',
+          position: 'is-bottom-left',
+          actionText: 'undo',
+          duration: 3000,
+          onAction: () => {
+            this.selectedRegions = snapshot
+            this.$buefy.toast.open({
+              message: 'Regions restored',
+              queue: false,
+            })
+          },
+        })
+      }
     },
   },
 })
