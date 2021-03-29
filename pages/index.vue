@@ -1,16 +1,5 @@
 <template>
   <div class="section">
-    <section class="columns">
-      <div class="column is-12">
-        <AutoCompleteInputField
-          label="Search Region"
-          placeholder="Type Italian region..."
-          :allOptions="allRegions"
-          :notAvaiableOptions="selectedRegions"
-          @selected="onAddRegion"
-        />
-      </div>
-    </section>
     <BarChart :data="chartData" />
   </div>
 </template>
@@ -19,20 +8,16 @@
 import Vue from 'vue'
 import BarChart from '~/components/charts/BarChart'
 
-import AutoCompleteInputField from '~/components/ui/AutoCompleteInputField'
-
 export default Vue.extend({
   name: 'page-somministrations',
   components: {
     BarChart,
-    AutoCompleteInputField,
   },
   data() {
     return {
       data: [],
       selectedRegions: [],
       allRegions: null,
-      focusedRegion: null,
     }
   },
   created() {
@@ -90,16 +75,6 @@ export default Vue.extend({
         data: selectedData.map((el) => el[label]),
         backgroundColor,
         orderWidth: 4,
-      }
-    },
-    onAddRegion(value) {
-      if (!value) return
-      if (this.selectedRegions.includes(value)) {
-        this.selectedRegions = this.selectedRegions.filter(
-          (region) => region !== value
-        )
-      } else {
-        this.selectedRegions.push(value)
       }
     },
   },

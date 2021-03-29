@@ -22,7 +22,7 @@ import SvgMap from '~/components/charts/SvgMap'
 import italyPath from '~/assets/svg/italy'
 
 export default Vue.extend({
-  name: 'italy-map',
+  name: 'the-italy-map',
   components: {
     SvgMap,
   },

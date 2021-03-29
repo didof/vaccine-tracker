@@ -1,16 +1,16 @@
 <template>
   <section>
-    <b-field :label="label">
+    <b-field label="Search">
       <b-autocomplete
-        :placeholder="placeholder"
+        placeholder="Type something..."
         rounded
         icon="magnify"
         clearable
         v-model="value"
         :data="filtered"
-        @select="$emit('selected', $event)"
+        @select="onSelect($event)"
       >
-        <template #empty>{{ empty }}</template>
+        <template #empty>No results found</template>
       </b-autocomplete>
     </b-field>
   </section>
@@ -20,38 +20,19 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'auto-complete-input-field',
-  emits: ['selected'],
-  props: {
-    label: {
-      type: String,
-      default: 'Search',
-    },
-    placeholder: {
-      type: String,
-      default: 'Type something...',
-    },
-    empty: {
-      type: String,
-      default: 'No results found',
-    },
-    allOptions: {
-      type: Array,
-      require: true,
-    },
-    notAvaiableOptions: {
-      type: Array,
-      defaukt: [],
-    },
-  },
+  name: 'the-auto-complete-regions-input-field',
   data() {
     return {
+      allRegions: this.$store.getters['map/regions'],
       value: '',
     }
   },
   computed: {
+    notAvaiableOptions() {
+      return this.$store.getters['map/selectedRegions']
+    },
     avaiableOptions() {
-      return this.allOptions.filter((option) => {
+      return this.allRegions.filter((option) => {
         return !this.notAvaiableOptions.includes(option)
       })
     },
@@ -61,6 +42,13 @@ export default Vue.extend({
           option.toString().toLowerCase().indexOf(this.value.toLowerCase()) >= 0
         )
       })
+    },
+  },
+  methods: {
+    onSelect(value) {
+      const updated = [...this.notAvaiableOptions, value]
+      this.$store.dispatch('map/setSelectedRegions', updated)
+      this.value = ''
     },
   },
 })
