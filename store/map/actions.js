@@ -8,4 +8,10 @@ export default {
   setFocusedRegion({ commit }, payload) {
     commit('setFocusedRegion', payload)
   },
+  fullSelectedRegions({ commit }) {
+    commit('fullSelectedRegions')
+  },
+  emptySelectedRegions({ commit }) {
+    commit('emptySelectedRegions')
+  },
 }

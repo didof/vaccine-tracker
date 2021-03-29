@@ -8,4 +8,10 @@ export default {
   setFocusedRegion(state, payload) {
     state.focusedRegion = payload
   },
+  fullSelectedRegions(state) {
+    state.selectedRegions = state.regions
+  },
+  emptySelectedRegions(state) {
+    state.selectedRegions = []
+  },
 }
