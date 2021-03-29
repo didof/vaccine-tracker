@@ -2,31 +2,28 @@
   <div class="section">
     <section class="columns">
       <div class="column is-12">
-        <RegionSwitch
-          :watchItems="selectedRegions"
-          :itemsLength="data.length"
-          @change="onRegionSwitchChange"
-        />
-        <!-- <b-switch size="is-large" v-model="regionsSwitch">All regions</b-switch> -->
-        <!-- <b-field label="Find a name">
-          <b-autocomplete
-            v-model="name"
-            placeholder="e.g. Anne"
-            :keep-first="keepFirst"
-            :open-on-focus="openOnFocus"
-            :data="filteredDataObj"
-            field="user.first_name"
-            @select="(option) => (selected = option)"
-            :clearable="clearable"
-          >
-          </b-autocomplete>
-        </b-field> -->
+        <b-field grouped group-multiline>
+          <RegionSwitch
+            :watchItems="selectedRegions"
+            :itemsLength="data.length"
+            @change="onRegionSwitchChange"
+          />
+        </b-field>
+
         <TagList
           :items="selectedRegions"
           :focusedElement="focusedRegion"
           @tag-click="onTagClick"
           @tag-enter="onEnter"
           @tag-leave="onLeave"
+        />
+
+        <AutoCompleteInputField
+          label="Search Region"
+          placeholder="Type Italian region..."
+          :allOptions="allRegions"
+          :notAvaiableOptions="selectedRegions"
+          @selected="onAddRegion"
         />
       </div>
     </section>
@@ -42,7 +39,7 @@
           :elementIdentifier="'nome_area'"
           :activeList="selectedRegions"
           :focusedElement="focusedRegion"
-          @path-click="onRegionClick"
+          @path-click="onAddRegion"
           @path-enter="onEnter"
           @path-leave="onLeave"
         />
@@ -60,6 +57,7 @@ import SvgMap from '~/components/charts/SvgMap'
 
 import TagList from '~/components/ui/TagList'
 import RegionSwitch from '~/components/ui/switches/RegionSwitch'
+import AutoCompleteInputField from '~/components/ui/AutoCompleteInputField'
 
 export default Vue.extend({
   name: 'page-somministrations',
@@ -68,19 +66,21 @@ export default Vue.extend({
     SvgMap,
     TagList,
     RegionSwitch,
+    AutoCompleteInputField,
   },
   data() {
     return {
       italyPaths,
       data: [],
       selectedRegions: [],
+      allRegions: null,
       focusedRegion: null,
-      regionsSwitch: true,
     }
   },
   created() {
     this.data = this.$store.getters['somministrations/data']
     this.selectedRegions = this.data.map((region) => region.nome_area)
+    this.allRegions = this.selectedRegions
   },
   computed: {
     chartData() {
@@ -134,7 +134,8 @@ export default Vue.extend({
         orderWidth: 4,
       }
     },
-    onRegionClick(value) {
+    onAddRegion(value) {
+      if (!value) return
       if (this.selectedRegions.includes(value)) {
         this.selectedRegions = this.selectedRegions.filter(
           (region) => region !== value
