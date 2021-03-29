@@ -1,50 +1,77 @@
 <template>
-  <section class="tile is-ancestor">
-    <article class="tile is-child notification">
-      <div class="content">
-        <p class="title">Consegna e Somministrazione di Vaccini</p>
-        <p class="subtitle">With even more content</p>
-        <div class="content">
-          <BarChart :labels="labels" :datasets="datasets" />
-        </div>
+  <div class="section">
+    <section class="columns">
+      <div class="column is-12">
+        <b-field>
+          <b-switch size="is-large" v-model="regionsSwitch"
+            >All regions</b-switch
+          >
+        </b-field>
+        <TagList
+          :items="selectedRegions"
+          :focusedElement="focusedRegion"
+          @tag-click="onTagClick"
+          @tag-enter="onEnter"
+          @tag-leave="onLeave"
+        />
       </div>
-    </article>
-
-    <article class="tile is-child notification">
-      <div class="content">
-        <p class="title">{{ selectedRegion }}</p>
-        <p class="subtitle">{{ dosiSomministrate }}</p>
-        <div class="content">
-          <ItalyMap @region-hover="onRegionHover" />
-        </div>
+    </section>
+    <section class="columns">
+      <div class="column is-8">
+        <BarChart :data="chartData" />
       </div>
-    </article>
-  </section>
+      <div class="column is-4">
+        <SvgMap
+          :paths="italyPaths"
+          :data="data"
+          :filterBy="'dosi_somministrate'"
+          :elementIdentifier="'nome_area'"
+          :activeList="selectedRegions"
+          :focusedElement="focusedRegion"
+          @path-click="onRegionClick"
+          @path-enter="onEnter"
+          @path-leave="onLeave"
+        />
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import BarChart from '~/components/charts/BarChart'
-import ItalyMap from '~/components/charts/MapItaly'
+
+import italyPaths from '~/assets/svg/italy'
+import SvgMap from '~/components/charts/SvgMap'
+
+import TagList from '~/components/ui/TagList'
 
 export default Vue.extend({
   name: 'page-somministrations',
   components: {
     BarChart,
-    ItalyMap,
+    SvgMap,
+    TagList,
   },
   data() {
     return {
-      selectedRegion: '',
-      dosiSomministrate: null,
+      italyPaths,
+      data: [],
+      selectedRegions: [],
+      focusedRegion: null,
+      regionsSwitch: true,
     }
   },
+  created() {
+    this.data = this.$store.getters['somministrations/data']
+    this.selectedRegions = this.data.map((region) => region.nome_area)
+  },
   computed: {
-    data() {
-      return this.$store.getters['somministrations/data']
-    },
-    labels() {
-      return this.data.map((el) => el.nome_area)
+    chartData() {
+      return {
+        labels: this.selectedRegions,
+        datasets: this.datasets,
+      }
     },
     datasets() {
       const providedDoses = this.generateDataset(
@@ -78,26 +105,68 @@ export default Vue.extend({
       data = store.getters['somministrations/data']
     }
   },
-  methods: {
-    generateDataset(label, backgroundColor) {
-      return {
-        label,
-        data: this.data.map((el) => el[label]),
-        backgroundColor,
-        orderWidth: 1,
+  watch: {
+    selectedRegions(value) {
+      console.log(value.length)
+      if (value.length === this.data.length) {
+        this.regionsSwitch = true
       }
     },
-    onRegionHover(hoveredRegion) {
-      this.selectedRegion = hoveredRegion
+    regionsSwitch(value) {
+      if (value) {
+        this.selectedRegions = this.data.map((region) => region.nome_area)
+      } else {
+        const snapshot = this.selectedRegions
+        this.selectedRegions = []
+        this.$buefy.snackbar.open({
+          message: 'All regions deselected',
+          type: 'is-info',
+          position: 'is-bottom-left',
+          actionText: 'undo',
+          duration: 3000,
+          onAction: () => {
+            this.selectedRegions = snapshot
+            this.$buefy.toast.open({
+              message: 'Regions restored',
+              queue: false,
+            })
+          },
+        })
+      }
     },
   },
-  watch: {
-    selectedRegion(value) {
-      const data = this.$store.getters['somministrations/data']
+  methods: {
+    generateDataset(label, backgroundColor) {
+      const selectedData = this.data.filter((region) =>
+        this.selectedRegions.includes(region.nome_area)
+      )
 
-      const regionObject = data.find((region) => region.nome_area === value)
-
-      this.dosiSomministrate = regionObject.dosi_somministrate
+      return {
+        label,
+        data: selectedData.map((el) => el[label]),
+        backgroundColor,
+        orderWidth: 4,
+      }
+    },
+    onRegionClick(value) {
+      if (this.selectedRegions.includes(value)) {
+        this.selectedRegions = this.selectedRegions.filter(
+          (region) => region !== value
+        )
+      } else {
+        this.selectedRegions.push(value)
+      }
+    },
+    onEnter(value) {
+      this.focusedRegion = value
+    },
+    onLeave() {
+      this.focusedRegion = null
+    },
+    onTagClick(value) {
+      this.selectedRegions = this.selectedRegions.filter(
+        (region) => region !== value
+      )
     },
   },
 })

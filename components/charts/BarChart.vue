@@ -5,22 +5,34 @@ export default Vue.extend({
   name: 'bar-chart',
   extends: Bar,
   props: {
-    labels: {
-      type: Array,
-      required: true,
-    },
-    datasets: {
-      type: Array,
+    data: {
+      type: Object,
       required: true,
     },
   },
+  data() {
+    return {
+      options: { responsive: true, maintainAspectRatio: false },
+    }
+  },
+  computed: {
+    chartData() {
+      return this.data
+    },
+  },
   mounted() {
-    const { labels, datasets } = this.$props
-
-    this.renderChart({
-      labels,
-      datasets,
-    })
+    this.render()
+  },
+  watch: {
+    data() {
+      this.$data._chart.destroy()
+      this.render()
+    },
+  },
+  methods: {
+    render() {
+      this.renderChart(this.chartData, this.options)
+    },
   },
 })
 </script>

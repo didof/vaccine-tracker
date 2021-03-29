@@ -47,8 +47,10 @@ export default {
         case 'dosi_consegnate':
           merged[key] += bolzano[key]
           break
+        case 'percentuale_somministrazione':
+          break
         case 'nome_area':
-          merged.nome_area = 'Trentino-Alto Adige'
+          merged[key] = 'Trentino-Alto Adige'
       }
       return merged
     }, trento)
