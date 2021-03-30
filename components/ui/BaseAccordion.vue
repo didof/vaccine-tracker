@@ -15,7 +15,10 @@
           @mouseover="onMouseEnter(index, item.title)"
           @mouseleave="onMouseLeave"
         >
-          <p class="card-header-title" :style="getStyle(index, item.title)">
+          <p
+            class="card-header-title"
+            :style="getHeaderStyle(index, item.title)"
+          >
             {{ item.title }}
           </p>
           <span class="is-flex" v-if="index == hoverIndex">
@@ -85,7 +88,7 @@ export default Vue.extend({
       this.hoverIndex = null
       this.$emit('element-leave')
     },
-    getStyle(index, title) {
+    getHeaderStyle(index, title) {
       return {
         color:
           index === this.openIndex || title === this.focusedItem
@@ -93,6 +96,7 @@ export default Vue.extend({
             : 'black',
       }
     },
+    getIconStyle(isOpen) {},
   },
 })
 </script>

@@ -6,10 +6,10 @@
       </div>
     </div>
     <div class="container is-fluid columns">
-      <div class="column">
+      <div class="column is-8">
         <BaseTabs :tabs="tabs" />
       </div>
-      <div class="column is-4 section">
+      <div class="column is-4 section absolute">
         <TheItalyMap />
         <TheRegionsSwitch />
         <TheAutoCompleteRegionsInputField />
@@ -100,3 +100,11 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style scoped>
+.absolute {
+  position: fixed;
+  top: 13%;
+  right: 0;
+}
+</style>
