@@ -23,11 +23,13 @@ export default Vue.extend({
   name: 'the-auto-complete-regions-input-field',
   data() {
     return {
-      allRegions: this.$store.getters['map/regions'],
       value: '',
     }
   },
   computed: {
+    allRegions() {
+      return this.$store.getters['map/regions']
+    },
     notAvaiableOptions() {
       return this.$store.getters['map/selectedRegions']
     },
