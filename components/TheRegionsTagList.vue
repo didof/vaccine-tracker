@@ -2,7 +2,7 @@
   <b-field label="Selected Regions">
     <b-taglist>
       <span
-        class="tag is-large"
+        class="tag"
         :class="getClass(tag)"
         v-for="tag in selectedRegions"
         :key="tag"

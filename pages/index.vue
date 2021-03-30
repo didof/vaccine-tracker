@@ -2,14 +2,22 @@
   <div class="section">
     <div class="container is-fluid columns">
       <div class="column">
-        <BarChart :data="chartData" />
-        <TheAdministrationsTable />
+        <BaseTabs :tabs="tabs" />
       </div>
-      <div class="column is-5 section">
-        <TheRegionsSwitch />
+      <div class="column is-4 section">
         <TheItalyMap />
-        <TheRegionsTagList />
+        <TheRegionsSwitch />
         <TheAutoCompleteRegionsInputField />
+      </div>
+    </div>
+    <div class="container is-fluid columns">
+      <div class="column">
+        <TheRegionsTagList />
+      </div>
+    </div>
+    <div class="container is-fluid-columns">
+      <div class="column">
+        <TheAdministrationsTable />
       </div>
     </div>
   </div>
@@ -20,7 +28,10 @@ import Vue from 'vue'
 
 import fetchAndStore from '~/utils/fetchAndStore'
 
-import BarChart from '~/components/charts/BarChart'
+import BaseTabs from '~/components/ui/BaseTabs'
+
+import TheSomministrationsBarChart from '~/components/TheSomministrationsBarChart'
+
 import TheItalyMap from '~/components/TheItalyMap'
 import TheRegionsSwitch from '~/components/TheRegionsSwitch'
 import TheRegionsTagList from '~/components/TheRegionsTagList'
@@ -30,12 +41,27 @@ import TheAdministrationsTable from '~/components/TheAdministrationsTable'
 export default Vue.extend({
   name: 'page-somministrations',
   components: {
-    BarChart,
+    BaseTabs,
     TheItalyMap,
     TheRegionsSwitch,
     TheRegionsTagList,
     TheAutoCompleteRegionsInputField,
     TheAdministrationsTable,
+    TheSomministrationsBarChart,
+  },
+  data() {
+    return {
+      tabs: [
+        {
+          label: 'somministrations',
+          component: TheSomministrationsBarChart,
+        },
+        // {
+        //   label: 'administrations',
+        //   component: BaseTable,
+        // },
+      ],
+    }
   },
   async fetch(context) {
     await fetchAndStore('somministrations', context)

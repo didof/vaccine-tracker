@@ -4,12 +4,7 @@ import { Bar } from 'vue-chartjs'
 export default Vue.extend({
   name: 'bar-chart',
   extends: Bar,
-  props: {
-    data: {
-      type: Object,
-      required: true,
-    },
-  },
+  props: ['data'],
   data() {
     return {
       options: { responsive: true, maintainAspectRatio: false },

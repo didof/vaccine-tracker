@@ -7,7 +7,7 @@
     @element-leave="onLeave"
   >
     <template v-slot:default="slotProps">
-      <div>{{ slotProps }}</div>
+      <BaseTable :data="Object.values(slotProps)" />
     </template>
   </BaseAccordion>
 </template>
@@ -16,11 +16,13 @@
 import Vue from 'vue'
 
 import BaseAccordion from '~/components/ui/BaseAccordion'
+import BaseTable from '~/components/ui/BaseTable'
 
 export default Vue.extend({
   name: 'the-administrations-table',
   components: {
     BaseAccordion,
+    BaseTable,
   },
   computed: {
     administrations() {

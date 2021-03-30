@@ -6,7 +6,7 @@
       v-for="(item, index) of activeItems"
       :key="index"
       :open="openIndex == index"
-      @open="openIndex = index"
+      @open="onMouseClick(index)"
     >
       <template #trigger="props">
         <div
@@ -68,6 +68,12 @@ export default Vue.extend({
     }
   },
   methods: {
+    onMouseClick(index) {
+      this.openIndex = null
+      setTimeout(() => {
+        this.openIndex = index
+      }, 500)
+    },
     onMouseEnter(index, title) {
       this.hoverIndex = index
       this.$emit('element-enter', title)

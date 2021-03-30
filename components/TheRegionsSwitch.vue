@@ -1,5 +1,5 @@
 <template>
-  <b-switch size="is-large" v-model="state">Toggle Regions</b-switch>
+  <b-switch v-model="state">Toggle regions</b-switch>
 </template>
 
 <script>
