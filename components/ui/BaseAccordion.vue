@@ -22,7 +22,10 @@
             <a class="card-header-icon">
               <b-icon :icon="props.open ? 'menu-up' : 'menu-down'"> </b-icon>
             </a>
-            <a class="card-header-icon">
+            <a
+              class="card-header-icon"
+              @click.stop="$emit('element-delete', item.title)"
+            >
               <button class="delete"></button>
             </a>
           </span>
@@ -39,7 +42,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'base-accordion',
-  emits: ['element-enter', 'element-leave'],
+  emits: ['element-enter', 'element-leave', 'element-delete'],
   props: {
     items: {
       type: Object,

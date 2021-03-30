@@ -2,22 +2,17 @@
   <div class="section">
     <div class="container is-fluid columns">
       <div class="column">
+        <TheRegionsTagList />
+      </div>
+    </div>
+    <div class="container is-fluid columns">
+      <div class="column">
         <BaseTabs :tabs="tabs" />
       </div>
       <div class="column is-4 section">
         <TheItalyMap />
         <TheRegionsSwitch />
         <TheAutoCompleteRegionsInputField />
-      </div>
-    </div>
-    <div class="container is-fluid columns">
-      <div class="column">
-        <TheRegionsTagList />
-      </div>
-    </div>
-    <div class="container is-fluid-columns">
-      <div class="column">
-        <TheAdministrationsTable />
       </div>
     </div>
   </div>
@@ -46,20 +41,18 @@ export default Vue.extend({
     TheRegionsSwitch,
     TheRegionsTagList,
     TheAutoCompleteRegionsInputField,
-    TheAdministrationsTable,
-    TheSomministrationsBarChart,
   },
   data() {
     return {
       tabs: [
         {
-          label: 'somministrations',
+          label: 'Somministrations',
           component: TheSomministrationsBarChart,
         },
-        // {
-        //   label: 'administrations',
-        //   component: BaseTable,
-        // },
+        {
+          label: 'Administrations',
+          component: TheAdministrationsTable,
+        },
       ],
     }
   },

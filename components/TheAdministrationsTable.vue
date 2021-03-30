@@ -5,6 +5,7 @@
     :focusedItem="focusedElement"
     @element-enter="onEnter"
     @element-leave="onLeave"
+    @element-delete="onDelete"
   >
     <template v-slot:default="slotProps">
       <BaseTable :data="Object.values(slotProps)" />
@@ -41,6 +42,10 @@ export default Vue.extend({
     },
     onLeave() {
       this.$store.dispatch('map/setFocusedRegion', null)
+    },
+    onDelete(value) {
+      const filtered = this.selectedRegions.filter((region) => region !== value)
+      this.$store.dispatch('map/setSelectedRegions', filtered)
     },
   },
 })
