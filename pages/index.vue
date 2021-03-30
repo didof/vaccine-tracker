@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+    <pre>{{ administrations }}</pre>
     <div class="container is-fluid columns">
       <div class="column"><BarChart :data="chartData" /></div>
       <div class="column is-5 section">
@@ -31,10 +32,14 @@ export default Vue.extend({
   },
   async fetch(context) {
     await fetchAndStore('somministrations', context)
+    await fetchAndStore('administrations', context)
   },
   computed: {
-    data() {
+    somministrations() {
       return this.$store.getters['somministrations/data']
+    },
+    administrations() {
+      return this.$store.getters['administrations/data']
     },
     chartData() {
       return {
@@ -58,7 +63,7 @@ export default Vue.extend({
   methods: {
     generateDataset(label, backgroundColor) {
       const selectedRegions = this.$store.getters['map/selectedRegions']
-      const selectedData = this.data.filter((region) =>
+      const selectedData = this.somministrations.filter((region) =>
         selectedRegions.includes(region.areaName)
       )
 

@@ -8,7 +8,6 @@ export default {
     delete payload.schema
 
     const filtered = filterFields(payload.data, [
-      'index',
       'dosi_somministrate',
       'dosi_consegnate',
       'percentuale_somministrazione',
@@ -36,9 +35,6 @@ export default {
     const trentinoAltoAdige = Object.keys(trento.value).reduce(
       (merged, key) => {
         switch (key) {
-          case 'index':
-            merged.index = 21
-            break
           case 'dosesAdministered':
           case 'deliveredDoses':
             merged[key] += bolzano.value[key]
