@@ -1,5 +1,15 @@
 <template>
-  <BaseAccordion :items="administrations" :activeList="selectedRegions" />
+  <BaseAccordion
+    :items="administrations"
+    :activeList="selectedRegions"
+    :focusedItem="focusedElement"
+    @element-enter="onEnter"
+    @element-leave="onLeave"
+  >
+    <template v-slot:default="slotProps">
+      <div>{{ slotProps }}</div>
+    </template>
+  </BaseAccordion>
 </template>
 
 <script>
@@ -18,6 +28,17 @@ export default Vue.extend({
     },
     selectedRegions() {
       return this.$store.getters['map/selectedRegions']
+    },
+    focusedElement() {
+      return this.$store.getters['map/focusedRegion']
+    },
+  },
+  methods: {
+    onEnter(value) {
+      this.$store.dispatch('map/setFocusedRegion', value)
+    },
+    onLeave() {
+      this.$store.dispatch('map/setFocusedRegion', null)
     },
   },
 })

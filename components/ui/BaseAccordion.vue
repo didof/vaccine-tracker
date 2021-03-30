@@ -3,24 +3,33 @@
     <b-collapse
       class="card"
       animation="slide"
-      v-for="(item, i) of activeItems"
-      :key="i"
-      :open="index == i"
-      @open="index = i"
+      v-for="(item, index) of activeItems"
+      :key="index"
+      :open="openIndex == index"
+      @open="openIndex = index"
     >
       <template #trigger="props">
-        <div class="card-header" role="button">
-          <p class="card-header-title">
+        <div
+          class="card-header"
+          role="button"
+          @mouseover="onMouseEnter(index, item.title)"
+          @mouseleave="onMouseLeave"
+        >
+          <p class="card-header-title" :style="getStyle(index, item.title)">
             {{ item.title }}
           </p>
-          <a class="card-header-icon">
-            <b-icon :icon="props.open ? 'menu-down' : 'menu-up'"> </b-icon>
-          </a>
+          <span class="is-flex" v-if="index == hoverIndex">
+            <a class="card-header-icon">
+              <b-icon :icon="props.open ? 'menu-up' : 'menu-down'"> </b-icon>
+            </a>
+            <a class="card-header-icon">
+              <button class="delete"></button>
+            </a>
+          </span>
         </div>
       </template>
-      <div class="card-content">
-        <div class="content">{{ item }}</div>
-      </div>
+
+      <slot v-bind="item"></slot>
     </b-collapse>
   </section>
 </template>
@@ -30,6 +39,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'base-accordion',
+  emits: ['element-enter', 'element-leave'],
   props: {
     items: {
       type: Object,
@@ -37,6 +47,10 @@ export default Vue.extend({
     },
     activeList: {
       type: Array,
+      require: true,
+    },
+    focusedItem: {
+      type: String,
       require: true,
     },
   },
@@ -49,8 +63,27 @@ export default Vue.extend({
   },
   data() {
     return {
-      index: null,
+      openIndex: null,
+      hoverIndex: null,
     }
+  },
+  methods: {
+    onMouseEnter(index, title) {
+      this.hoverIndex = index
+      this.$emit('element-enter', title)
+    },
+    onMouseLeave() {
+      this.hoverIndex = null
+      this.$emit('element-leave')
+    },
+    getStyle(index, title) {
+      return {
+        color:
+          index === this.openIndex || title === this.focusedItem
+            ? 'green'
+            : 'black',
+      }
+    },
   },
 })
 </script>
