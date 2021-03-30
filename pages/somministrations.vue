@@ -1,24 +1,37 @@
 <template>
   <div class="section">
-    <BarChart :data="chartData" />
+    <div class="container is-fluid columns">
+      <div class="column"><BarChart :data="chartData" /></div>
+      <div class="column is-4 section">
+        <TheRegionsSwitch /><TheItalyMap /><TheRegionsTagList /><TheAutoCompleteRegionsInputField />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import BarChart from '~/components/charts/BarChart'
+import TheItalyMap from '~/components/TheItalyMap'
+import TheRegionsSwitch from '~/components/TheRegionsSwitch'
+import TheRegionsTagList from '~/components/TheRegionsTagList'
+import TheAutoCompleteRegionsInputField from '~/components/TheAutoCompleteRegionsInputField'
 
 export default Vue.extend({
   name: 'page-somministrations',
   components: {
     BarChart,
+    TheItalyMap,
+    TheRegionsSwitch,
+    TheRegionsTagList,
+    TheAutoCompleteRegionsInputField,
   },
   data() {
     return {
       data: [],
     }
   },
-  created() {
+  mounted() {
     this.data = this.$store.getters['somministrations/data']
   },
   async fetch({ store, $axios }) {

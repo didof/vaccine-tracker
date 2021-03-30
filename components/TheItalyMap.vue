@@ -1,8 +1,8 @@
 <template>
   <div>
     <SvgMap
-      :paths="italyPath"
       :data="data"
+      :paths="italyPath"
       :filterBy="filterBy"
       :elementIdentifier="elementIdentifier"
       :activeList="selectedRegions"
@@ -18,7 +18,6 @@
 import Vue from 'vue'
 
 import SvgMap from '~/components/charts/SvgMap'
-
 import italyPath from '~/assets/svg/italy'
 
 export default Vue.extend({
@@ -32,7 +31,7 @@ export default Vue.extend({
       data: [],
     }
   },
-  created() {
+  mounted() {
     this.data = this.$store.getters['somministrations/data']
     this.regions = this.data.map((region) => region.nome_area)
     this.$store.dispatch('map/setRegions', this.regions)

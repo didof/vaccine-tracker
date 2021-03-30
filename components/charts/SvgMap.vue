@@ -55,15 +55,18 @@ export default Vue.extend({
       denominator: null,
     }
   },
-  created() {
-    const values = this.data.map((el) => el[this.filterBy])
-    this.min = Math.min(...values)
-    const max = Math.max(...values)
-    this.denominator = max - this.min
+  computed: {
+    normalizeUtils() {
+      const values = this.data.map((el) => el[this.filterBy])
+      const min = Math.min(...values)
+      const denominator = Math.max(...values) - min
+      return [min, denominator]
+    },
   },
   methods: {
     normalize(value) {
-      return (value - this.min) / this.denominator
+      const [min, denominator] = this.normalizeUtils
+      return (value - min) / denominator
     },
     fill(title) {
       if (!this.activeList.includes(title)) return 'rgba(0, 0, 0, 0.3)'
