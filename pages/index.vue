@@ -1,9 +1,15 @@
 <template>
   <div class="section">
     <div class="container is-fluid columns">
-      <div class="column"><BarChart :data="chartData" /></div>
+      <div class="column">
+        <BarChart :data="chartData" />
+        <TheAdministrationsTable />
+      </div>
       <div class="column is-5 section">
-        <TheRegionsSwitch /><TheItalyMap /><TheRegionsTagList /><TheAutoCompleteRegionsInputField />
+        <TheRegionsSwitch />
+        <TheItalyMap />
+        <TheRegionsTagList />
+        <TheAutoCompleteRegionsInputField />
       </div>
     </div>
   </div>
@@ -19,6 +25,7 @@ import TheItalyMap from '~/components/TheItalyMap'
 import TheRegionsSwitch from '~/components/TheRegionsSwitch'
 import TheRegionsTagList from '~/components/TheRegionsTagList'
 import TheAutoCompleteRegionsInputField from '~/components/TheAutoCompleteRegionsInputField'
+import TheAdministrationsTable from '~/components/TheAdministrationsTable'
 
 export default Vue.extend({
   name: 'page-somministrations',
@@ -28,6 +35,7 @@ export default Vue.extend({
     TheRegionsSwitch,
     TheRegionsTagList,
     TheAutoCompleteRegionsInputField,
+    TheAdministrationsTable,
   },
   async fetch(context) {
     await fetchAndStore('somministrations', context)
@@ -36,9 +44,6 @@ export default Vue.extend({
   computed: {
     somministrations() {
       return this.$store.getters['somministrations/data']
-    },
-    administrations() {
-      return this.$store.getters['administrations/data']
     },
     chartData() {
       return {

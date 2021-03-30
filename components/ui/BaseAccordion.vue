@@ -3,15 +3,15 @@
     <b-collapse
       class="card"
       animation="slide"
-      v-for="(collapse, index) of collapses"
-      :key="index"
-      :open="isOpen == index"
-      @open="isOpen = index"
+      v-for="(item, i) of activeItems"
+      :key="i"
+      :open="index == i"
+      @open="index = i"
     >
       <template #trigger="props">
         <div class="card-header" role="button">
           <p class="card-header-title">
-            {{ collapse.title }}
+            {{ item.title }}
           </p>
           <a class="card-header-icon">
             <b-icon :icon="props.open ? 'menu-down' : 'menu-up'"> </b-icon>
@@ -19,34 +19,38 @@
         </div>
       </template>
       <div class="card-content">
-        <div class="content">
-          {{ collapse.text }}
-        </div>
+        <div class="content">{{ item }}</div>
       </div>
     </b-collapse>
   </section>
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+
+export default Vue.extend({
+  name: 'base-accordion',
+  props: {
+    items: {
+      type: Object,
+      require: true,
+    },
+    activeList: {
+      type: Array,
+      require: true,
+    },
+  },
+  computed: {
+    activeItems() {
+      return Object.keys(this.items)
+        .filter((element) => this.activeList.includes(element))
+        .map((title) => ({ ...this.items[title], title }))
+    },
+  },
   data() {
     return {
-      isOpen: 0,
-      collapses: [
-        {
-          title: 'Title 1',
-          text: 'Text 1',
-        },
-        {
-          title: 'Title 2',
-          text: 'Text 2',
-        },
-        {
-          title: 'Title 3',
-          text: 'Text 3',
-        },
-      ],
+      index: null,
     }
   },
-}
+})
 </script>
