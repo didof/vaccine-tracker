@@ -1,63 +1,63 @@
+import filterFields from '~/utils/filterFields'
+import renameProperties from '~/utils/renameProperties'
+import searchAndUpdate from '~/utils/searchAndUpdate'
+import searchInArray from '~/utils/searchInArray'
+
 export default {
   setData({ commit }, payload) {
     delete payload.schema
 
-    const FIELDS = [
+    const filtered = filterFields(payload.data, [
       'index',
       'dosi_somministrate',
       'dosi_consegnate',
       'percentuale_somministrazione',
       'nome_area',
-    ]
+    ])
 
-    const filtered = payload.data.map((element) => {
-      return Object.keys(element).reduce((accumulator, current) => {
-        if (FIELDS.includes(current)) {
-          accumulator[current] = element[current]
-        }
-
-        return accumulator
-      }, {})
+    const renamed = renameProperties(filtered, {
+      dosi_somministrate: 'dosesAdministered',
+      dosi_consegnate: 'deliveredDoses',
+      percentuale_somministrazione: 'administrationPercentage',
+      nome_area: 'areaName',
     })
 
-    const valleDAostaIndex = filtered.findIndex(
-      (region) => region.nome_area === "Valle d'Aosta / Vallée d'Aoste"
+    searchAndUpdate(
+      renamed,
+      ['areaName', "Valle d'Aosta"],
+      (element) => element.areaName === "Valle d'Aosta / Vallée d'Aoste"
     )
 
-    filtered[valleDAostaIndex].nome_area = "Valle d'Aosta"
+    const [trento, bolzano] = searchInArray(renamed, [
+      (element) => element.areaName === 'Provincia Autonoma Trento',
+      (element) => element.areaName === 'Provincia Autonoma Bolzano / Bozen',
+    ])
 
-    const trentoIndex = filtered.findIndex(
-      (region) => region.nome_area === 'Provincia Autonoma Trento'
+    const trentinoAltoAdige = Object.keys(trento.value).reduce(
+      (merged, key) => {
+        switch (key) {
+          case 'index':
+            merged.index = 21
+            break
+          case 'dosesAdministered':
+          case 'deliveredDoses':
+            merged[key] += bolzano.value[key]
+            break
+          case 'administrationPercentage':
+            break
+          case 'areaName':
+            merged[key] = 'Trentino-Alto Adige'
+        }
+        return merged
+      },
+      trento.value
     )
-    const bolzanoIndex = filtered.findIndex(
-      (region) => region.nome_area === 'Provincia Autonoma Bolzano / Bozen'
-    )
 
-    const trento = filtered[trentoIndex]
-    const bolzano = filtered[bolzanoIndex]
+    renamed.splice(trento.index, 1)
+    renamed.splice(bolzano.index, 1)
+    renamed.push(trentinoAltoAdige)
 
-    const trentinoAltoAdige = Object.keys(trento).reduce((merged, key) => {
-      switch (key) {
-        case 'index':
-          merged.index = 21
-          break
-        case 'dosi_somministrate':
-        case 'dosi_consegnate':
-          merged[key] += bolzano[key]
-          break
-        case 'percentuale_somministrazione':
-          break
-        case 'nome_area':
-          merged[key] = 'Trentino-Alto Adige'
-      }
-      return merged
-    }, trento)
-
-    filtered.splice(trentoIndex, 1)
-    filtered.splice(bolzanoIndex, 1)
-    filtered.push(trentinoAltoAdige)
-
-    commit('setData', filtered)
+    commit('setData', renamed)
   },
   setFetchDate({ commit }, payload) {
     // TODO: format date

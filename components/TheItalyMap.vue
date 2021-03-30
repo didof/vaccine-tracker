@@ -33,7 +33,7 @@ export default Vue.extend({
   },
   mounted() {
     this.data = this.$store.getters['somministrations/data']
-    this.regions = this.data.map((region) => region.nome_area)
+    this.regions = this.data.map((region) => region.areaName)
     this.$store.dispatch('map/setRegions', this.regions)
     this.$store.dispatch('map/setSelectedRegions', this.regions)
   },

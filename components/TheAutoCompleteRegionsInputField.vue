@@ -48,6 +48,7 @@ export default Vue.extend({
   },
   methods: {
     onSelect(value) {
+      if (!value) return
       const updated = [...this.notAvaiableOptions, value]
       this.$store.dispatch('map/setSelectedRegions', updated)
       this.value = ''

@@ -2,7 +2,7 @@
   <div class="section">
     <div class="container is-fluid columns">
       <div class="column"><BarChart :data="chartData" /></div>
-      <div class="column is-4 section">
+      <div class="column is-5 section">
         <TheRegionsSwitch /><TheItalyMap /><TheRegionsTagList /><TheAutoCompleteRegionsInputField />
       </div>
     </div>
@@ -62,11 +62,11 @@ export default Vue.extend({
     },
     datasets() {
       const providedDoses = this.generateDataset(
-        'dosi_somministrate',
+        'dosesAdministered',
         'rgba(0, 0, 255, 0.5)'
       )
       const givenDoses = this.generateDataset(
-        'dosi_consegnate',
+        'deliveredDoses',
         'rgba(0, 255, 0, 0.5)'
       )
 
@@ -77,7 +77,7 @@ export default Vue.extend({
     generateDataset(label, backgroundColor) {
       const selectedRegions = this.$store.getters['map/selectedRegions']
       const selectedData = this.data.filter((region) =>
-        selectedRegions.includes(region.nome_area)
+        selectedRegions.includes(region.areaName)
       )
 
       return {
