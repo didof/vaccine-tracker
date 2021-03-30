@@ -1,6 +1,5 @@
 <template>
   <div class="section">
-    <pre>{{ administrations }}</pre>
     <div class="container is-fluid columns">
       <div class="column"><BarChart :data="chartData" /></div>
       <div class="column is-5 section">
