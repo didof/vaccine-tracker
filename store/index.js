@@ -1,10 +1,12 @@
 import { Store } from 'vuex'
-import somministrations from './data/somministrations'
+
 import map from './map'
+import administration from './data/administration'
+import somministrations from './data/somministrations'
 
 const createStore = () =>
   new Store({
-    modules: { map, somministrations },
+    modules: { map, administration, somministrations },
   })
 
 export default createStore
