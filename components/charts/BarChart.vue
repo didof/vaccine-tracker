@@ -20,6 +20,7 @@ export default Vue.extend({
   },
   watch: {
     data() {
+      console.log('yop')
       this.$data._chart.destroy()
       this.render()
     },

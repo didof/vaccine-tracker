@@ -8,7 +8,15 @@
     </div>
     <div class="container is-fluid columns">
       <div class="column is-8">
-        <BaseTabs :tabs="tabs" />
+        <!-- <BaseTabs :tabs="tabs" /> -->
+        <OnePerTimeTabs :labels="['somministrations', 'administrations']">
+          <template #somministrations>
+            <TheSomministrationsBarChart />
+          </template>
+          <template #administrations>
+            <TheAdministrationsTable />
+          </template>
+        </OnePerTimeTabs>
       </div>
       <div class="column is-4 section absolute">
         <TheItalyMap />
@@ -24,26 +32,33 @@ import Vue from 'vue'
 
 import fetchAndStore from '~/utils/fetchAndStore'
 
-import BaseTabs from '~/components/ui/BaseTabs'
-import TheSomministrationsBarChart from '~/components/TheSomministrationsBarChart'
-
 import ColorModeSwitch from '~/components/ColorModeSwitch'
 
-import TheItalyMap from '~/components/TheItalyMap'
-import TheRegionsSwitch from '~/components/TheRegionsSwitch'
-import TheRegionsTagList from '~/components/TheRegionsTagList'
-import TheAutoCompleteRegionsInputField from '~/components/TheAutoCompleteRegionsInputField'
-import TheAdministrationsTable from '~/components/TheAdministrationsTable'
+import {
+  TheAutoCompleteRegionsInputField,
+  TheItalyMap,
+  TheRegionsSwitch,
+  TheRegionsTagList,
+} from '~/components/cockpit'
+
+import BaseTabs from '~/components/ui/BaseTabs'
+import OnePerTimeTabs from '~/components/ui/OnePerTimeTabs'
+
+import TheSomministrationsBarChart from '~/components/sections/TheSomministrationsBarChart'
+import TheAdministrationsTable from '~/components/sections/TheAdministrationsTable'
 
 export default Vue.extend({
   name: 'page-somministrations',
   components: {
     BaseTabs,
+    OnePerTimeTabs,
     TheItalyMap,
     TheRegionsSwitch,
     TheRegionsTagList,
     TheAutoCompleteRegionsInputField,
     ColorModeSwitch,
+    TheSomministrationsBarChart,
+    TheAdministrationsTable,
   },
   data() {
     return {
