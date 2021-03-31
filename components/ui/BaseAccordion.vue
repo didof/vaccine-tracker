@@ -16,11 +16,9 @@
           :isActive="index === openIndex || item.title === focusedItem"
           @element-enter="$emit('element-enter', $event)"
           @element-leave="$emit('element-leave')"
-          @element-delete="$emit('element-delete', $event)"
+          @element-delete="onDelete"
         />
       </template>
-
-      <BaseAccordionTabs :item="item" :tagsIdentifier="tagsIdentifier" />
 
       <slot v-bind="item"></slot>
     </b-collapse>
@@ -31,14 +29,12 @@
 import Vue from 'vue'
 
 import BaseAccordionHeader from '~/components/ui/BaseAccordionHeader'
-import BaseAccordionTabs from '~/components/ui/BaseAccordionTabs'
 
 export default Vue.extend({
   name: 'base-accordion',
   emits: ['element-enter', 'element-leave', 'element-delete'],
   components: {
     BaseAccordionHeader,
-    BaseAccordionTabs,
   },
   props: {
     items: {
@@ -62,19 +58,10 @@ export default Vue.extend({
     activeItems() {
       return Object.keys(this.items)
         .filter((element) => this.activeList.includes(element))
-        .map((title) => {
-          const item = this.items[title]
-          const redundantTabs = Object.values(item)
-            .filter((element) => typeof element === 'object')
-            .map((element) => element[this.tagsIdentifier])
-          const tabs = new Set(redundantTabs)
-
-          return {
-            ...item,
-            tabs,
-            title,
-          }
-        })
+        .map((title) => ({
+          ...this.items[title],
+          title,
+        }))
     },
     focusedElement() {
       return this.$store.getters['map/focusedRegion']
@@ -91,6 +78,10 @@ export default Vue.extend({
       setTimeout(() => {
         this.openIndex = index
       }, 500)
+    },
+    onDelete(title) {
+      this.$emit('element-delete', title)
+      this.openIndex = null
     },
     getHeaderClass(title) {
       return {

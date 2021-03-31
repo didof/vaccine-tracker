@@ -8,7 +8,7 @@
     @element-leave="onLeave"
     @element-delete="onDelete"
   >
-    <template v-slot:default="slotProps">
+    <template #default="slotProps">
       <BaseTable :data="Object.values(slotProps)" />
     </template>
   </BaseAccordion>

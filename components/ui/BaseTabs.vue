@@ -1,13 +1,11 @@
 <template>
-  <section>
-    <b-tabs v-model="activeTab">
-      <b-tab-item v-for="tab in tabs" :key="tab.label" :label="tab.label">
-        <keep-alive>
-          <component :is="tab.component"></component>
-        </keep-alive>
-      </b-tab-item>
-    </b-tabs>
-  </section>
+  <b-tabs v-model="activeTab">
+    <b-tab-item v-for="tab in tabs" :key="tab.label" :label="tab.label">
+      <keep-alive>
+        <component :is="tab.component"></component>
+      </keep-alive>
+    </b-tab-item>
+  </b-tabs>
 </template>
 
 <script>
