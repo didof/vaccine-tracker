@@ -15,12 +15,23 @@
           @mouseover="onMouseEnter(index, item.title)"
           @mouseleave="onMouseLeave"
         >
-          <p
-            class="card-header-title"
+          <div
+            class="card-header-title is-flex is-justify-content-space-between is-align-content-center"
             :style="getHeaderStyle(index, item.title)"
           >
-            {{ item.title }}
-          </p>
+            <p>
+              {{ item.title }}
+            </p>
+            <b-taglist v-if="index == hoverIndex">
+              <span
+                class="tag"
+                v-for="tag in tags"
+                :key="tag"
+                @click="onClick(tag)"
+                >{{ tag }}</span
+              >
+            </b-taglist>
+          </div>
           <span class="is-flex" v-if="index == hoverIndex">
             <a class="card-header-icon">
               <b-icon :icon="props.open ? 'menu-up' : 'menu-down'"> </b-icon>
@@ -59,12 +70,24 @@ export default Vue.extend({
       type: String,
       require: true,
     },
+    tagsIdentifier: {
+      type: String,
+      require: true,
+    },
   },
   computed: {
     activeItems() {
       return Object.keys(this.items)
         .filter((element) => this.activeList.includes(element))
         .map((title) => ({ ...this.items[title], title }))
+    },
+    tags() {
+      const key = this.activeList[this.hoverIndex]
+      const item = this.items[key]
+      const relevant = Object.values(item).map(
+        (element) => element[this.tagsIdentifier]
+      )
+      return new Set(relevant)
     },
   },
   data() {
@@ -96,7 +119,6 @@ export default Vue.extend({
             : 'black',
       }
     },
-    getIconStyle(isOpen) {},
   },
 })
 </script>

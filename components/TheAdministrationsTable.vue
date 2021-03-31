@@ -3,6 +3,7 @@
     :items="administrations"
     :activeList="selectedRegions"
     :focusedItem="focusedElement"
+    tagsIdentifier="province"
     @element-enter="onEnter"
     @element-leave="onLeave"
     @element-delete="onDelete"
