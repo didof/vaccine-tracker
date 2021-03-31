@@ -8,13 +8,17 @@
     </div>
     <div class="container is-fluid columns">
       <div class="column is-8">
-        <!-- <BaseTabs :tabs="tabs" /> -->
-        <OnePerTimeTabs :labels="['somministrations', 'administrations']">
-          <template #somministrations>
+        <OnePerTimeTabs
+          :labels="['vaccinations_by_region', 'hospitals', 'registry']"
+        >
+          <template #vaccinations_by_region>
             <TheSomministrationsBarChart />
           </template>
-          <template #administrations>
+          <template #hospitals>
             <TheAdministrationsTable />
+          </template>
+          <template #registry>
+            <TheRegistryDonutChart />
           </template>
         </OnePerTimeTabs>
       </div>
@@ -46,6 +50,7 @@ import OnePerTimeTabs from '~/components/ui/OnePerTimeTabs'
 
 import TheSomministrationsBarChart from '~/components/sections/TheSomministrationsBarChart'
 import TheAdministrationsTable from '~/components/sections/TheAdministrationsTable'
+import TheRegistryDonutChart from '~/components/sections/TheRegistryDonutChart'
 
 export default Vue.extend({
   name: 'page-somministrations',
@@ -59,6 +64,7 @@ export default Vue.extend({
     ColorModeSwitch,
     TheSomministrationsBarChart,
     TheAdministrationsTable,
+    TheRegistryDonutChart,
   },
   data() {
     return {
@@ -77,6 +83,7 @@ export default Vue.extend({
   async fetch(context) {
     await fetchAndStore('somministrations', context)
     await fetchAndStore('administrations', context)
+    await fetchAndStore('registry', context)
   },
   computed: {
     somministrations() {

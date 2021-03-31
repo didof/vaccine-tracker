@@ -1,5 +1,6 @@
 import administrationsMock from './mocks/administrations'
 import somministrationsMock from './mocks/somministrations'
+import registryMock from './mocks/registry'
 
 const fetchAndStore = async (label, { store, $axios }) => {
   console.log('[fetchAndStore] ', label)
@@ -18,6 +19,10 @@ const fetchAndStore = async (label, { store, $axios }) => {
       case 'somministrations':
         console.log('[mock] somministrations')
         data = somministrationsMock
+        break
+      case 'registry':
+        console.log('[mock] registry')
+        data = registryMock
         break
       default:
         data = await $axios.$get(url)
