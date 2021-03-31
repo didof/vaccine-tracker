@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+    <ColorModeSwitch />
     <div class="container is-fluid columns">
       <div class="column">
         <TheRegionsTagList />
@@ -24,8 +25,9 @@ import Vue from 'vue'
 import fetchAndStore from '~/utils/fetchAndStore'
 
 import BaseTabs from '~/components/ui/BaseTabs'
-
 import TheSomministrationsBarChart from '~/components/TheSomministrationsBarChart'
+
+import ColorModeSwitch from '~/components/ColorModeSwitch'
 
 import TheItalyMap from '~/components/TheItalyMap'
 import TheRegionsSwitch from '~/components/TheRegionsSwitch'
@@ -41,6 +43,7 @@ export default Vue.extend({
     TheRegionsSwitch,
     TheRegionsTagList,
     TheAutoCompleteRegionsInputField,
+    ColorModeSwitch,
   },
   data() {
     return {
