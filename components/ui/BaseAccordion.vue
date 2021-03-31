@@ -23,13 +23,7 @@
               {{ item.title }}
             </p>
             <b-taglist v-if="index == hoverIndex">
-              <span
-                class="tag"
-                v-for="tag in tags"
-                :key="tag"
-                @click="onClick(tag)"
-                >{{ tag }}</span
-              >
+              <span class="tag" v-for="tag in tags" :key="tag">{{ tag }}</span>
             </b-taglist>
           </div>
           <span class="is-flex" v-if="index == hoverIndex">
