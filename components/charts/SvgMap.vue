@@ -7,6 +7,8 @@
         :d="path.d"
         :title="path.title"
         :fill="fill(path.title)"
+        :stroke="stroke(path.title)"
+        :stroke-width="strokeWidth(path.title)"
         @click="$emit('path-click', path.title)"
         @mouseenter="$emit('path-enter', path.title)"
         @mouseleave="$emit('path-leave')"
@@ -82,6 +84,12 @@ export default Vue.extend({
       const a = this.normalize(found[this.filterBy])
       return `rgba(${rgb}, ${a})`
     },
+    stroke(title) {
+      return title === this.focusedElement ? 'green' : 'white'
+    },
+    strokeWidth(title) {
+      return title === this.focusedElement ? 4 : 1
+    },
   },
 })
 </script>
@@ -91,12 +99,5 @@ path {
   cursor: pointer;
   transition: fill 0.3s ease-in-out, stroke 0.3s ease-in-out 0.1s,
     stroke-width 0.3s ease-in-out;
-  stroke: white;
-  stroke-width: 1;
-}
-
-path:hover {
-  stroke: green;
-  stroke-width: 4;
 }
 </style>
