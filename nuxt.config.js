@@ -48,8 +48,6 @@ export default {
         Ubuntu: [400, 700],
       },
     ],
-    // https://color-mode.nuxtjs.org/
-    '@nuxtjs/color-mode',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

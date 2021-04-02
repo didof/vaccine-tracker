@@ -3,21 +3,15 @@ export default () => ({
     'https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/anagrafica-vaccini-summary-latest.json',
   data: [],
   fetchDate: null,
-  selectedOption: 'genders',
+  selectedOption: 'doses',
   options: {
     genders: ['maleGender', 'femaleGender'],
-    categories: [
-      'socioHealthWorkers',
-      'notMedicalPersonnel',
-      'other',
-      'rsaGuests',
-      'over80',
-      'armedForces',
-      'schoolStaff',
-    ],
+    stateWorkers: ['socioHealthWorkers', 'armedForces', 'schoolStaff'],
+    doses: ['firstDose', 'secondDose'],
   },
   colors: {
     genders: ['pink', 'skyblue'],
-    categories: ['red', 'blue', 'grey', 'yellow', 'purple', 'green', 'orange'],
+    stateWorkers: ['red', 'green', 'yellow'],
+    doses: ['green', 'blue'],
   },
 })

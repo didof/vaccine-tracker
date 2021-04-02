@@ -7,7 +7,15 @@ export default Vue.extend({
   props: ['data'],
   data() {
     return {
-      options: { responsive: true, maintainAspectRatio: false },
+      options: {
+        responsive: true,
+        circumference: Math.PI,
+        rotation: 2 * Math.PI,
+        maintainAspectRatio: false,
+        legend: {
+          display: false,
+        },
+      },
     }
   },
   computed: {
