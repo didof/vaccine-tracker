@@ -17,6 +17,9 @@ export default {
   selected(state) {
     return state.selectedOption
   },
+  options(state) {
+    return state.options
+  },
   selectedOption(state, getters) {
     return state.options[getters.selected]
   },

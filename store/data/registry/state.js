@@ -10,8 +10,8 @@ export default () => ({
     doses: ['firstDose', 'secondDose'],
   },
   colors: {
-    genders: ['pink', 'skyblue'],
-    stateWorkers: ['red', 'green', 'yellow'],
-    doses: ['green', 'blue'],
+    genders: ['246, 168, 255', '166, 248, 255'],
+    stateWorkers: ['250, 131, 125', '26, 145, 48', '235, 232, 84'],
+    doses: ['52, 235, 131', '50, 159, 237'],
   },
 })

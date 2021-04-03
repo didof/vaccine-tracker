@@ -37,5 +37,7 @@ export default {
 
     commit('setData', renamed)
   },
-  setFetchDate({ commit }, payload) {},
+  setSelected({ commit }, payload) {
+    commit('setSelected', payload)
+  },
 }

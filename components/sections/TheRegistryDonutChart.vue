@@ -1,5 +1,16 @@
 <template>
-  <div>
+  <div
+    class="is-flex is-flex-direction-column is-justify-content-space-around is-align-content-center"
+  >
+    <div class="buttons is-centered">
+      <b-button
+        v-for="option in Object.keys(options)"
+        :key="option"
+        :class="getButtonClass(option)"
+        @click="onClick(option)"
+        >{{ option }}</b-button
+      >
+    </div>
     <DonutChart :data="chartData" />
     <BaseTable :data="tableData" />
   </div>
@@ -30,6 +41,15 @@ export default Vue.extend({
     selectedData() {
       return this.$store.getters['registry/selectedData']
     },
+    options() {
+      return this.$store.getters['registry/options']
+    },
+    selectedOption() {
+      return this.$store.getters['registry/selectedOption']
+    },
+    selected() {
+      return this.$store.getters['registry/selected']
+    },
     datasets() {
       const grouped = Object.values(this.selectedData).reduce(
         (accumulator, current) => {
@@ -46,7 +66,8 @@ export default Vue.extend({
 
       const formatted = Object.values(grouped).map((data, index) => ({
         data,
-        backgroundColor: this.colors[index],
+        backgroundColor: `rgba(${this.colors[index]}, 0.5)`,
+        hoverBackgroundColor: `rgba(${this.colors[index]}, 0.7)`,
       }))
 
       return formatted
@@ -68,6 +89,14 @@ export default Vue.extend({
       )
 
       return test
+    },
+  },
+  methods: {
+    getButtonClass(value) {
+      return { 'is-primary': value === this.selected }
+    },
+    onClick(value) {
+      this.$store.dispatch('registry/setSelected', value)
     },
   },
 })
