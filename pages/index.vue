@@ -125,7 +125,7 @@ export default Vue.extend({
 <style scoped>
 .absolute {
   position: fixed;
-  top: 13%;
+  top: 20%;
   right: 0;
 }
 </style>

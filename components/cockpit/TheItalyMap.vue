@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="section is-flex is-flex-direction-column">
     <SvgMap
       :data="data"
       :paths="italyPath"
@@ -11,9 +11,11 @@
       @path-leave="onLeave"
       @path-click="onClick"
     />
-    <b-tag v-if="percentage">
-      <strong>{{ focusedRegion }}</strong
-      >'s administrations: {{ percentage }}%
+    <b-tag class="is-medium">
+      <span v-if="percentage" c>
+        <strong>{{ focusedRegion }}</strong
+        >'s administrations: {{ percentage }}%
+      </span>
     </b-tag>
   </div>
 </template>

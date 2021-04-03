@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <Nuxt />
-    <b-modal v-model="isModalActive" :width="640" scroll="keep">
+    <b-modal v-model="isModalActive" :can-cancel="false">
       <div class="card">
         <div class="card-image">
           <figure class="image is-4by3">
@@ -10,8 +10,8 @@
         </div>
         <div class="card-content">
           <div class="content">
-            At the moment this demo was built to be usable on devices with a
-            screen at least 772 px wide. <br /><br />I am very sorry :/
+            This demo was built to be usable on devices with a screen at least
+            772 px wide.
           </div>
         </div>
       </div>
