@@ -1,6 +1,10 @@
 <template>
   <b-tabs v-model="activeTab">
-    <b-tab-item v-for="(label, index) in labels" :key="label" :label="label">
+    <b-tab-item
+      v-for="(label, index) in labels"
+      :key="label"
+      :label="formatTable(label)"
+    >
       <div v-if="index === activeTab">
         <slot :name="label">{{ label }}</slot>
       </div>
@@ -23,6 +27,11 @@ export default Vue.extend({
     return {
       activeTab: 0,
     }
+  },
+  methods: {
+    formatTable(value) {
+      return value.split('_').join(' ')
+    },
   },
 })
 </script>

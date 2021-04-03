@@ -11,6 +11,10 @@
       @path-leave="onLeave"
       @path-click="onClick"
     />
+    <b-tag v-if="percentage">
+      <strong>{{ focusedRegion }}</strong
+      >'s administrations: {{ percentage }}%
+    </b-tag>
   </div>
 </template>
 
@@ -49,6 +53,12 @@ export default Vue.extend({
     },
     elementIdentifier() {
       return this.$store.getters['map/elementIdentifier']
+    },
+    percentage() {
+      const index = this.selectedRegions.indexOf(this.focusedRegion)
+      if (!~index) return
+
+      return this.data[index].administrationPercentage
     },
   },
   methods: {
