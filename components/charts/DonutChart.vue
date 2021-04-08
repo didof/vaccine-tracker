@@ -12,9 +12,6 @@ export default Vue.extend({
         circumference: Math.PI,
         rotation: 2 * Math.PI,
         maintainAspectRatio: false,
-        legend: {
-          display: false,
-        },
       },
     }
   },

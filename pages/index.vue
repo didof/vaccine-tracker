@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+    <h1 class="title">Vaccine Tracker</h1>
     <div class="container is-fluid columns">
       <div class="column">
         <TheRegionsTagList />
@@ -8,7 +9,7 @@
     <div class="container is-fluid columns">
       <div class="column is-8">
         <OnePerTimeTabs
-          :labels="['vaccinations_by_region', 'hospitals', 'registry']"
+          :labels="['vaccinations_by_region', 'hospitals', 'statictics']"
         >
           <template #vaccinations_by_region>
             <TheSomministrationsBarChart />
@@ -16,7 +17,7 @@
           <template #hospitals>
             <TheAdministrationsTable />
           </template>
-          <template #registry>
+          <template #statictics>
             <TheRegistryDonutChart />
           </template>
         </OnePerTimeTabs>

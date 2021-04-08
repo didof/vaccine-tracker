@@ -1,5 +1,6 @@
 <template>
   <div class="section is-flex is-flex-direction-column">
+    <b-field class="subtitle">Regions by Volume of Doses administered</b-field>
     <SvgMap
       :data="data"
       :paths="italyPath"
@@ -14,7 +15,7 @@
     <b-tag class="is-medium">
       <span v-if="percentage" c>
         <strong>{{ focusedRegion }}</strong
-        >'s administrations: {{ percentage }}%
+        >'s used the {{ percentage }}% of its doses
       </span>
     </b-tag>
   </div>
